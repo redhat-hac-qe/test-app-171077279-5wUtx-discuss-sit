@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/created-by: application-service
+    app.kubernetes.io/instance: nodejs-app-multi-components-repo
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: nodejs-app-multi-components-repo
+    app.kubernetes.io/part-of: test-app-171077279
+  name: nodejs-app-multi-components-repo
+spec:
+  replicas: 2
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: nodejs-app
+      app.kubernetes.io/instance: nodejs-app-multi-components-repo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nodejs-app
+        app.kubernetes.io/instance: nodejs-app-multi-components-repo
+    spec:
+      containers:
+      - env:
+        - name: secondEnvVar
+          value: "3000"
+        image: nodejs-image:latest
+        name: my-nodejs
+        ports:
+        - containerPort: 3001
+          name: http
+          protocol: TCP
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 9m
+            memory: 1Gi
+status: {}
